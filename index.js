@@ -3,6 +3,7 @@ var fs = require('fs')
   , async = require('async')
   , svg2ttf = require('svg2ttf')
   , ttf2woff = require('ttf2woff')
+  , ttf2eot = require('ttf2eot')
   , _ = require('underscore')
   , svg = require('./lib/svg')
 ;
@@ -80,6 +81,22 @@ function generateFont (inputDir, outputDir, done) {
         return next(null, file);
       });
     }],
+    createEot: ['loadConfig', 'createTtf', function (next, data) {
+      var eot = ttf2eot(data.createTtf, data.loadConfig);
+      if (! eot) {
+        return next('Could not create EOT file');
+      }
+      return next(null, eot.buffer);
+    }],
+    saveEot: ['loadConfig', 'createEot', function (next, data) {
+      var file = path.resolve(outputDir, data.loadConfig.id + '.eot');
+      fs.writeFile(file, new Buffer(data.createEot), function (err) {
+        if (err) {
+          return next(err);
+        }
+        return next(null, file);
+      });
+    }],
     createWoff: ['loadConfig', 'createTtf', function (next, data) {
       var woff = ttf2woff(data.createTtf, data.loadConfig);
       if (! woff) {
@@ -100,7 +117,7 @@ function generateFont (inputDir, outputDir, done) {
     if (err) {
       return done(err);
     }
-    return done(null, { svg: data.saveSvg, ttf: data.saveTtf, woff: data.saveWoff });
+    return done(null, { svg: data.saveSvg, ttf: data.saveTtf, eot: data.saveEot, woff: data.saveWoff });
   });
 }
 
