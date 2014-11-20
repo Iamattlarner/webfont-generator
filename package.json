@@ -8,6 +8,7 @@
       "email": "shah@moven.com"
     }
   ],
+  "main": "index.js",
   "scripts": {
     "start": "node index"
   },

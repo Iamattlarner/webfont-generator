@@ -13,7 +13,7 @@ function generateCharMap(fontDetails, inputDir) {
 
 		var config = merge(JSON.parse(fontDetails), {charmap: charmap})
 		fs.writeFile(path.join(inputDir, '/', 'config.json'), jsonFormat(config), function(error) {
-			console.log(error || 'done.');
+			console.log(error || 'config done.');
 		})
 	});
 };

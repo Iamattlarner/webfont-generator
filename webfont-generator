@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var fg = require('./index'),
-    generateCharMap = require('./generateCharMap.js'),
+    generateCharmap = require('./generateCharmap.js'),
     fs = require('fs'),
     path = require('path');
 
@@ -20,7 +20,7 @@ function loadConfig() {
 
 if(createCharmap) {
     var config = loadConfig()
-    generateCharMap(config, inputDir);
+    generateCharmap(config, inputDir);
 }
 
 fg.generateFont(inputDir, outputDir, function (err, result) {
