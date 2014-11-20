@@ -1,11 +1,10 @@
 var fs = require('fs')
-  , path = require('path')
-  , async = require('async')
-  , svg2ttf = require('svg2ttf')
-  , ttf2woff = require('ttf2woff')
-  , _ = require('underscore')
-  , svg = require('./lib/svg')
-;
+  path = require('path'),
+  async = require('async'),
+  svg2ttf = require('svg2ttf'),
+  ttf2woff = require('ttf2woff'),
+  _ = require('underscore'),
+  svg = require('./lib/svg');
 
 var CONFIG_FILE = 'config.json';
 

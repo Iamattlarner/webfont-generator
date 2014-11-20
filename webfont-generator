@@ -1,16 +1,27 @@
 #!/usr/bin/env node
 
-var fg = require('./index')
-  , path = require('path')
-;
+var fg = require('./index'),
+    generateCharMap = require('./generateCharMap.js'),
+    fs = require('fs'),
+    path = require('path');
 
 if (process.argv.length < 4) {
-  console.log('Usage: webfont-generator <input folder> <output folder>');
+  console.log('Usage: webfont-generator <input folder> <output folder> -m generate charmap');
   return;
 }
 
 var inputDir = path.resolve(process.argv[2]);
 var outputDir = path.resolve(process.argv[3]);
+var createCharmap = (process.argv[4] === '-m' ? true : false);
+
+function loadConfig() {
+    return fs.readFileSync(path.join(inputDir, '/', 'config.json')).toString();
+}
+
+if(createCharmap) {
+    var config = loadConfig()
+    generateCharMap(config, inputDir);
+}
 
 fg.generateFont(inputDir, outputDir, function (err, result) {
   if (err) {
